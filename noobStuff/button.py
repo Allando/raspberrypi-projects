@@ -14,7 +14,7 @@ def main():
     # BUTTONS
     blueButton = 36
     yellowButton = 40
-    wb = 35
+    whiteButton = 35
     redButton = 31
 
     # LED State
@@ -24,7 +24,7 @@ def main():
     # Button presses
     blueButtonPress = True
     yellowButtonPress = True
-    wbp = True
+    whiteButtonPress = True
     redButtonPress = True
 
     # Setup the pin the LED is connected to
@@ -34,7 +34,7 @@ def main():
     # Setup the button
     GPIO.setup(blueButton, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(yellowButton, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.setup(wb, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(whiteButton, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(redButton, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
     try:
@@ -44,7 +44,7 @@ def main():
             blueButtonPress = GPIO.input(blueButton)
             yellowButtonPress = GPIO.input(yellowButton)
             
-            wbp = GPIO.input(wb)
+            whiteButtonPress = GPIO.input(whiteButton)
             redButtonPress = GPIO.input(redButton)
 
             if not blueButtonPress and not blueLedState and not yellowLedState:
@@ -61,7 +61,7 @@ def main():
                 blueLedState = False
                 yellowLedState = True
                 outputter(blueLedState, yellowLedState)
-            elif not wbp:
+            elif not whiteButtonPress:
                 print('hi')
                 blueLedState = False
                 yellowLedState = False
@@ -70,6 +70,7 @@ def main():
                 blueLedState = False
                 yellowLedState = False
                 outputter(blueLedState, yellowLedState)
+                print("Exiting...")
                 break
             sleep(.1)
     finally:
@@ -79,13 +80,10 @@ def main():
         GPIO.cleanup()
     
 
-
-
 def outputter(blueLedState, yellowLedState):
     GPIO.output(blueLed, blueLedState)
     GPIO.output(yellowLed, yellowLedState)
     
     print("Blue State: {} | Yellow State: {}".format(blueLedState, yellowLedState))
-    sleep(1)
 
 main()
